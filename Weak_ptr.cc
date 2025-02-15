@@ -1,6 +1,6 @@
 #include<iostream>
 
-uisng namespace std;
+using namespace std;
 
 class Weak_ptr{
     private:
