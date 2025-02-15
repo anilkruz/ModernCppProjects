@@ -29,5 +29,15 @@ jobs:
         run: |
           cd build
           ctest --output-on-failure
+            
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ libgtest-dev
+          sudo mkdir -p /usr/src/gtest
+          cd /usr/src/gtest
+          sudo cmake CMakeLists.txt
+          sudo make
+          sudo cp lib/*.a /usr/lib
 
 
