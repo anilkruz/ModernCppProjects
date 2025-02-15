@@ -5,7 +5,7 @@ uisng namespace std;
 class Weak_ptr{
     private:
 
-    publid:
+    public:
 };
 int main(){
 
