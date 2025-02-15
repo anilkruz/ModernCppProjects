@@ -1,6 +1,5 @@
 #include<iostream>
 #include<vector>
-
 using namespace std;
 class cus_allocate{
 	private:
@@ -31,9 +30,9 @@ class cus_allocate{
 			~cus_allocate(){
 				if(memory)
 				{
-			//	freelist.clear();
-			//	delete[] memory;
-			//	memory =nullptr;
+				freelist.clear(); //avoid dangling pointerss
+				delete[] memory; // avoid memory leaks
+				memory =nullptr; // avoid dangling pointer
 			}
 		
 			}
