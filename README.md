@@ -1,70 +1,61 @@
 # 🚀 Modern C++ Projects
-Modern C++ Smart Pointers & Custom Memory Allocator 🚀
 
-A performance-optimized implementation of custom shared_ptr, weak_ptr, and a custom memory allocator using Modern C++ (C++20).
-This project ensures efficient memory management, avoids memory leaks, and improves performance using RAII principles and custom allocation strategies.
+Modern C++ Projects 🚀
 
-🔥 Features
+Project Overview
 
-✅ Custom Smart Pointers (shared_ptr, weak_ptr) implementation
-✅ Reference Counting Mechanism for smart pointers
-✅ Custom Memory Allocator for optimized allocation & deallocation
-✅ CI/CD Integration with GitHub Actions for automated builds
-✅ CMake Build System for easy cross-platform compilation
+This project implements custom smart pointers (shared_ptr, weak_ptr) and a custom memory allocator using Modern C++. The goal is to improve memory management and optimize performance.
 
-⚙️ How to Build & Run?
+Features
+
+✅ Custom Shared Pointer (shared_ptr) Implementation
+✅ Custom Weak Pointer (weak_ptr) Implementation
+✅ Custom Memory Allocator for Performance Optimization
+✅ Unit Tests using GoogleTest
+✅ CI/CD Pipeline with GitHub Actions
+
+How to Build & Run?
 
 Step 1: Clone the Repository
 git clone https://github.com/anilkruz/ModernCppProjects.git
 cd ModernCppProjects
 Step 2: Build the Project
-mkdir build && cd build
+mkdir build
+cd build
 cmake ..
 make
 Step 3: Run the Executables
-Run Smart Pointer Implementation
+Run Shared Pointer Example
 
 ./shared_ptr
-Run Custom Memory Allocator
+Run Memory Allocator Example
 
 ./allocator
-🚀 CI/CD Pipeline Explained
+Step 4: Run Unit Tests
+ctest --output-on-failure
+CI/CD Pipeline Explained
 
-This project uses GitHub Actions for CI/CD, which automatically builds and tests the code whenever you push changes.
-📌 CI/CD Workflow:
-
-Push Code to GitHub (git push origin main)
-GitHub Actions Trigger Hota Hai (.github/workflows/ci.yml se)
-CI/CD Steps:
-Checkout Code
-Install Dependencies (CMake, Compiler)
-Run cmake .. && make
-Execute Tests
-Agar Sab Sahi Hai ✅, toh CI/CD Pass Ho Jayega!
-Agar Error Hai ❌, toh Logs Actions Tab Me Milenge!
-📌 Check CI/CD Status Here:
-👉 GitHub Actions
-
-📌 Code Example: Custom shared_ptr Usage
+Trigger: The pipeline automatically starts on a push or pull request to the main branch.
+Steps:
+✅ Checkout Code
+✅ Install Dependencies (cmake, g++, GoogleTest)
+✅ Build Project using CMake
+✅ Run Unit Tests using GoogleTest
+Failure Handling: If a test fails or the build breaks, GitHub Actions logs the error.
+Code Example: Smart Pointer Usage
 
 #include "shared_ptr.h"
-#include <iostream>
 
 int main() {
     SharedPtr<int> sp1(new int(10));
     SharedPtr<int> sp2 = sp1; // Reference count increases
-
-    std::cout << "Value: " << *sp1 << std::endl;
-    std::cout << "Use count: " << sp1.use_count() << std::endl;
-
+    std::cout << "Value: " << *sp1 << ", Use Count: " << sp1.use_count() << std::endl;
     return 0;
 }
-📌 Output:
+Contributing
 
-Value: 10
-Use count: 2
-🔥 Reference counting work kar raha hai!
+If you want to contribute, feel free to create a pull request!
 
-📜 License
+💡 For suggestions and improvements, open an issue in the repository.
 
-This project is open-source under the MIT License.
+
