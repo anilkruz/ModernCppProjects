@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(allocator ../custum_memory_allocator.cc)
 
 # Smart Pointer Implementation
-add_executable(shared_ptr ../shared_ptr.cc)
+add_executable(shared_ptr ../Shared_ptr.cc)
 add_executable(weakptr ../Weak_ptr.cc)
 
 # GoogleTest Setup
