@@ -64,7 +64,7 @@ public:
     // Get reference count
     int use_count() const { return ref_count ? ref_count->load() : 0; }
     void reset(){
-        cout<<endl<<"Reset executed Successfully"<<endl;
+        cout<<endl<<"reset executed Successfully"<<endl;
     }
 private:
     void release() {
