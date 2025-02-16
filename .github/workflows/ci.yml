@@ -28,7 +28,6 @@ jobs:
           sudo cmake --install build
 
       - name: Configure CMake
-        run: cmake -B build
         run: cmake -B build -S src
 
       - name: Build Project
