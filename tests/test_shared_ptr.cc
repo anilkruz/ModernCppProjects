@@ -1,4 +1,4 @@
-#include "Shared_ptr.cc"  // Tera actual implementation
+#include "../src/memory_management/Shared_ptr.cc"  // Tera actual implementation
 #include <gtest/gtest.h>
 
 TEST(SharedPtrTest, BasicFunctionality) {
