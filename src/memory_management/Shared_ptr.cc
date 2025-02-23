@@ -63,9 +63,6 @@ public:
     T* operator->() const { return ptr; }
     // Get reference count
     int use_count() const { return ref_count ? ref_count->load() : 0; }
-    void reset(){
-        cout<<endl<<"reset executed Successfully"<<endl;
-    }
 private:
     void release() {
         if (ref_count) {

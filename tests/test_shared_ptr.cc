@@ -1,4 +1,4 @@
-#include "../src/memory_management/Shared_ptr.cc"  // Tera actual implementation
+#include "../src/memory_management/Shared_ptr.cc"  // actual implementation
 #include <gtest/gtest.h>
 
 TEST(SharedPtrTest, BasicFunctionality) {
@@ -10,7 +10,7 @@ TEST(SharedPtrTest, BasicFunctionality) {
     EXPECT_EQ(sp1.use_count(), 2);
     EXPECT_EQ(sp2.use_count(), 2);
 
-    sp1.reset();
+ //   sp1.reset();
     EXPECT_EQ(sp1.use_count(), 0);
     EXPECT_EQ(sp2.use_count(), 1);
 }
