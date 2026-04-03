@@ -1,7 +1,5 @@
 #include <iostream>
 #include <utility>
-#include <memory>
-using namespace std;
 // Custom unique_ptr implementation
 template <typename T>
 class unique_ptr {
@@ -57,16 +55,10 @@ public:
     }
 };
 
-// make_unique implementation?
- /*
-template <typename T, typename... Args>
-std::unique_ptr<T> make_unique(Args&&... args) {
-    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}*/
-
+// make_unique implementation
 template<typename T, typename... Args>
-std::unique_ptr<T> make_unique(Args&&... args){
-    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+unique_ptr<T> make_unique(Args&&... args){
+    return unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 // Example usage
 class Test {
