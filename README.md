@@ -1,61 +1,153 @@
-# 🚀 Modern C++ Projects
+# Modern C++ Projects
 
-Modern C++ Projects 🚀
+[![C++ CI](https://github.com/anilkruz/ModernCppProjects/actions/workflows/ci.yml/badge.svg)](https://github.com/anilkruz/ModernCppProjects/actions/workflows/ci.yml)
+[![C++ Standard](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Project Overview
+A collection of Modern C++ implementations covering smart pointers, custom memory management, and RAII principles — built from scratch to understand the internals of the STL.
 
-This project implements custom smart pointers (shared_ptr, weak_ptr) and a custom memory allocator using Modern C++. The goal is to improve memory management and optimize performance.
+## Projects
 
-Features
+| Component | Description | Key Concepts |
+|-----------|-------------|--------------|
+| `SharedPtr<T>` | Reference-counted smart pointer | Atomic ref-counting, RAII, Rule of Five |
+| `UniquePtr<T>` | Exclusive-ownership smart pointer | Move semantics, deleted copy, `make_unique` |
+| `WeakPtr<T>` | Non-owning observer pointer | Breaking circular references, `lock()` |
+| `String` | Custom string class | Deep copy, move semantics, operator overloading |
+| `PoolAllocator` | Fixed-size block memory pool | Pre-allocation, free lists, cache locality |
 
-✅ Custom Shared Pointer (shared_ptr) Implementation
-✅ Custom Weak Pointer (weak_ptr) Implementation
-✅ Custom Memory Allocator for Performance Optimization
-✅ Unit Tests using GoogleTest
-✅ CI/CD Pipeline with GitHub Actions
+## Design Highlights
 
-How to Build & Run?
+- **Thread-safe reference counting** in `SharedPtr` using `std::atomic<int>`
+- **Zero-overhead move semantics** — move constructor/assignment implemented for all classes
+- **Rule of Five** applied consistently across all resource-owning classes
+- **WeakPtr** breaks circular `SharedPtr` references without affecting ownership
+- **Pool allocator** reduces heap fragmentation for workloads with many small, same-size allocations
 
-Step 1: Clone the Repository
+## Build & Run
+
+### Prerequisites
+
+- CMake >= 3.10
+- GCC/Clang with C++17 support
+- [GoogleTest](https://github.com/google/googletest)
+
+### Steps
+
+```bash
+# Clone
 git clone https://github.com/anilkruz/ModernCppProjects.git
 cd ModernCppProjects
-Step 2: Build the Project
-mkdir build
-cd build
-cmake ..
-make
-Step 3: Run the Executables
-Run Shared Pointer Example
 
-./shared_ptr
-Run Memory Allocator Example
+# Build
+cmake -B build -S src
+cmake --build build
 
-./allocator
-Step 4: Run Unit Tests
-ctest --output-on-failure
-CI/CD Pipeline Explained
+# Run tests
+cd build && ctest --output-on-failure
+```
 
-Trigger: The pipeline automatically starts on a push or pull request to the main branch.
-Steps:
-✅ Checkout Code
-✅ Install Dependencies (cmake, g++, GoogleTest)
-✅ Build Project using CMake
-✅ Run Unit Tests using GoogleTest
-Failure Handling: If a test fails or the build breaks, GitHub Actions logs the error.
-Code Example: Smart Pointer Usage
+### Run individual examples
 
-#include "shared_ptr.h"
+```bash
+./build/shared_ptr_example
+./build/unique_ptr_example
+./build/string_example
+./build/allocator_example
+```
 
-int main() {
-    SharedPtr<int> sp1(new int(10));
-    SharedPtr<int> sp2 = sp1; // Reference count increases
-    std::cout << "Value: " << *sp1 << ", Use Count: " << sp1.use_count() << std::endl;
-    return 0;
+## Usage Examples
+
+### SharedPtr
+
+```cpp
+#include "Shared_ptr.cc"
+
+SharedPtr<int> sp1(new int(42));
+SharedPtr<int> sp2 = sp1;           // ref count → 2
+
+std::cout << *sp1;                  // 42
+std::cout << sp1.use_count();       // 2
+// both sp1 and sp2 go out of scope → memory freed automatically
+```
+
+### UniquePtr
+
+```cpp
+#include "unique_ptr.cc"
+
+UniquePtr<int> u1(new int(10));
+UniquePtr<int> u2 = std::move(u1); // ownership transferred; u1 is now null
+
+auto u3 = make_unique<int>(99);    // preferred factory function
+```
+
+### WeakPtr
+
+```cpp
+#include "Weak_ptr.cc"
+
+SharedPtr<int> sp(new int(7));
+WeakPtr<int> wp = sp;              // does NOT increment ref count
+
+if (auto locked = wp.lock()) {     // safe access — returns SharedPtr or null
+    std::cout << *locked;          // 7
 }
-Contributing
+```
 
-If you want to contribute, feel free to create a pull request!
+### Pool Allocator
 
-💡 For suggestions and improvements, open an issue in the repository.
+```cpp
+#include "custom_memory_allocator.cc"
 
+PoolAllocator pool(64, 1000);      // 1000 blocks of 64 bytes each
 
+void* block = pool.allocate();
+// ... use block ...
+pool.deallocate(block);
+```
+
+## Testing
+
+Tests use [GoogleTest](https://github.com/google/googletest). Coverage includes:
+
+- `SharedPtr`: construction, copy/move, ref counting, destruction
+- `UniquePtr`: exclusive ownership, move transfer, `release()`, `reset()`
+- `String`: deep copy, move steal, concatenation
+
+```bash
+cd build && ctest -V
+```
+
+## CI/CD
+
+GitHub Actions runs on every push and pull request to `main`:
+
+1. Install dependencies (`cmake`, `g++`, GoogleTest)
+2. Configure and build with CMake
+3. Run all tests with `ctest --output-on-failure`
+
+## Project Structure
+
+```
+ModernCppProjects/
+├── src/
+│   ├── CMakeLists.txt
+│   └── memory_management/
+│       ├── Shared_ptr.cc              # SharedPtr<T> implementation
+│       ├── unique_ptr.cc              # UniquePtr<T> implementation
+│       ├── Weak_ptr.cc                # WeakPtr<T> implementation
+│       ├── String_impl.cc             # Custom String class
+│       ├── custom_memory_allocator.cc # Pool allocator
+│       └── operator_insertion_.cc     # Operator overloading demo
+├── tests/
+│   ├── test_shared_ptr.cc
+│   ├── test_unique_ptr.cc
+│   └── test_string.cc
+├── .github/workflows/ci.yml
+└── Doxyfile
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, open an issue first to discuss what you'd like to change.
